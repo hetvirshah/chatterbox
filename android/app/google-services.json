@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "999158014895",
+    "project_id": "chatterjii",
+    "storage_bucket": "chatterjii.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:999158014895:android:dff1470fe83ebadff0055a",
+        "android_client_info": {
+          "package_name": "com.example.chatterji"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "999158014895-koifl59hm78ohkr2kjmmr9s12ggb7o2i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5-jWiIXkx6nDfzySoeK-9-evD6Sf0In8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "999158014895-koifl59hm78ohkr2kjmmr9s12ggb7o2i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "999158014895-5t5aginvrgngmkm4gsjqujatijol8dng.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.chatterjii"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:999158014895:android:ac6f9dafccb3204bf0055a",
+        "android_client_info": {
+          "package_name": "com.example.chatterjii"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "999158014895-5ugq89id9ea5e7ulrf8dg25upk0rllb0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chatterjii",
+            "certificate_hash": "36cb5ff36253af701f56d1cdd107aa1a074ec1ff"
+          }
+        },
+        {
+          "client_id": "999158014895-kicr622c66oj43ev8uvqtavq64koajbr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chatterjii",
+            "certificate_hash": "cd1c55d7843afe618d5620ca4053e9c4ff6118e9"
+          }
+        },
+        {
+          "client_id": "999158014895-koifl59hm78ohkr2kjmmr9s12ggb7o2i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5-jWiIXkx6nDfzySoeK-9-evD6Sf0In8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "999158014895-koifl59hm78ohkr2kjmmr9s12ggb7o2i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "999158014895-5t5aginvrgngmkm4gsjqujatijol8dng.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.chatterjii"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
