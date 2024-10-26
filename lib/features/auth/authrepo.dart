@@ -22,7 +22,7 @@ class AuthRepository {
       return userCredential.user != null
           ? UserModel.fromFirebaseUser(userCredential.user!)
           : null;
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException catch (_) {
       return null;
     } catch (e) {
       print('An unknown error occurred: $e');

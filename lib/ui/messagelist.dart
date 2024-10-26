@@ -1,13 +1,10 @@
 import 'package:chatterjii/features/Messages/latestCubit.dart';
-import 'package:chatterjii/features/Messages/messagedatamodel.dart';
 import 'package:chatterjii/features/auth/authrepo.dart';
 import 'package:chatterjii/app/routes.dart';
-import 'package:chatterjii/ui/chatscreen.dart';
 import 'package:chatterjii/ui/widgets/errorcontainer.dart';
 import 'package:chatterjii/ui/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class MessagesList extends StatefulWidget {

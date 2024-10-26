@@ -1,6 +1,5 @@
 import 'package:chatterjii/app/app.dart';
 import 'package:chatterjii/app/firebase_options.dart';
-import 'package:chatterjii/utils/notificationUtility.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';

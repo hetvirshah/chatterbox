@@ -1,4 +1,6 @@
+import 'package:chatterjii/app/firebase_options.dart';
 import 'package:chatterjii/features/notification/notificationCubit.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -51,6 +53,8 @@ class NotificationUtility {
 //background listener (entry point is needed for background messages)
   @pragma('vm:entry-point')
   static Future<void> onBackgroundMessage(RemoteMessage remoteMessage) async {
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
     if (remoteMessage.data.isNotEmpty) {
       NotificationUtility()
           .createLocalNotification(dimissable: true, message: remoteMessage);
@@ -61,7 +65,6 @@ class NotificationUtility {
       await NotificationCubit().notifiedUser();
       Hive.box('counter').close();
     }
-    return;
   }
 
   //foreground listener

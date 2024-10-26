@@ -20,7 +20,6 @@ class ChatsList extends StatefulWidget {
 
 class _ChatsListState extends State<ChatsList> {
   late TextEditingController _messageController;
-  late AnimationController _controller;
 
   @override
   void initState() {
