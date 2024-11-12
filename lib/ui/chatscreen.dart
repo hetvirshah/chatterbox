@@ -7,6 +7,7 @@ import 'package:chatterjii/ui/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ChatsList extends StatefulWidget {
   final String? peerId;
@@ -20,7 +21,8 @@ class ChatsList extends StatefulWidget {
 
 class _ChatsListState extends State<ChatsList> {
   late TextEditingController _messageController;
-
+  final ImagePicker _picker = ImagePicker();
+  XFile? _image;
   @override
   void initState() {
     super.initState();
@@ -46,13 +48,28 @@ class _ChatsListState extends State<ChatsList> {
   void sendMessage() {
     if (_messageController.text.trim().isEmpty) return;
 
-    context.read<SendMessageCubit>().sendMessage(
-        receiver: widget.peerId ?? 'unknown',
-        content: _messageController.text.trim(),
-        rname: widget.peerName ?? 'anonymous');
+    context.read<SendMessageCubit>().sendMessage(widget.peerId ?? 'unknown',
+        widget.peerName ?? 'anonymous', _messageController.text.trim(), null);
 
     _messageController.clear();
   }
+
+  // Future getImage() async {
+  //   final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+
+  //   setState(() {
+  //     _image = image;
+  //     print(_image);
+  //   });
+  //   sendUrl();
+  // }
+
+  // void sendPhoto() {
+  //   context.read<SendMessageCubit>().sendMessage(widget.peerId ?? 'unknown',
+  //       widget.peerName ?? 'anonymous', null, _image!.path.toString());
+
+  //   _messageController.clear();
+  // }
 
   Widget noData() {
     return const Center(
@@ -166,7 +183,7 @@ class _ChatsListState extends State<ChatsList> {
                                             child: Column(
                                               children: [
                                                 Text(
-                                                  message.content,
+                                                  message.content!,
                                                   style: const TextStyle(
                                                       color: Colors.black),
                                                 ),
@@ -211,6 +228,13 @@ class _ChatsListState extends State<ChatsList> {
                                   color: Color.fromARGB(255, 12, 54, 13)),
                               onPressed: sendMessage,
                             ),
+                            // IconButton(
+                            //   icon: const Icon(Icons.add,
+                            //       color: Color.fromARGB(255, 12, 54, 13)),
+                            //   onPressed: () async {
+                            //     await getImage();
+                            //   },
+                            // ),
                           ],
                         ),
                       ),

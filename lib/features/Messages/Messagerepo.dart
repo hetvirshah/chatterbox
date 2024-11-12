@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:chatterjii/features/Messages/messagedatamodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 
 class MessageRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -50,12 +54,8 @@ class MessageRepository {
             snapshot.docs.map((doc) => Message.fromFirestore(doc)).toList());
   }
 
-  Future<Map<String, dynamic>> sendMessage(
-      {required String sender,
-      required String receiver,
-      required String content,
-      required String sname,
-      required String rname}) async {
+  Future<Map<String, dynamic>> sendMessage(String sender, String receiver,
+      String? content, String sname, String rname, String? imageFile) async {
     try {
       String chatId = generateChatId(sender, receiver);
 
@@ -72,6 +72,7 @@ class MessageRepository {
         'sname': sname,
         'rname': rname,
         'content': content,
+        'filename': imageFile,
         'createdAt': Timestamp.now(),
       };
 

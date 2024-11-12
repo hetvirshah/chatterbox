@@ -70,8 +70,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             create: (context) => SendMessageCubit(
                 MessageRepository(), LatestMessageCubit(MessageRepository())),
           ),
-          BlocProvider(create: (context) => NotificationCubit()),
-        ],
+          BlocProvider(create: (context) => NotificationCubit ()), ],
         child: MaterialApp(
           title: 'chatterjii',
           theme: ThemeData(),

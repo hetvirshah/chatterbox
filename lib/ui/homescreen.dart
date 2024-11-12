@@ -1,10 +1,11 @@
+
 import 'package:chatterjii/features/auth/authcubit.dart';
 
 import 'package:chatterjii/app/routes.dart';
-import 'package:chatterjii/features/notification/notificationCubit.dart';
 import 'package:chatterjii/ui/allusers.dart';
 
 import 'package:chatterjii/ui/messagelist.dart';
+
 import 'package:chatterjii/utils/notificationUtility.dart';
 
 import 'package:flutter/material.dart';
@@ -48,7 +49,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
       await Hive.openBox('counter');
-      context.read<NotificationCubit>().loadNotifications();
     }
   }
 
@@ -85,15 +85,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                   title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      BlocListener<NotificationCubit, NotificationState>(
-                        listener: (context, state) {
-                          print("state updayted");
-                        },
-                        child: Text(
-                          'Notification: ${context.watch<NotificationCubit>().counterNotification().toString()}',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      )
+                      Text(
+                        'Hello , ${state.user.displayName}',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ],
                   ),
                   bottom: PreferredSize(
@@ -103,6 +98,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                       children: [
                         _buildTabButton(context, 'Messages', 0),
                         _buildTabButton(context, 'All Users', 1),
+                        _buildTabButton(context, 'images', 2)
                       ],
                     ),
                   ),
@@ -127,7 +123,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                         topRight: Radius.circular(30))),
                 child: IndexedStack(
                   index: _selectedIndex,
-                  children: [MessagesList(), const UsersScreen()],
+                  children: [
+                    MessagesList(),
+                    UsersScreen()
+                  ],
                 ),
               ),
             ),

@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:chatterjii/features/Messages/Messagerepo.dart';
 import 'package:chatterjii/features/Messages/latestCubit.dart';
 import 'package:chatterjii/features/Messages/messagedatamodel.dart';
 import 'package:chatterjii/features/auth/authrepo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 abstract class SendMessageState {}
 
@@ -29,29 +32,28 @@ class SendMessageCubit extends Cubit<SendMessageState> {
   final MessageRepository messageRepository;
   final LatestMessageCubit latestMessageCubit;
 
-  Future<void> sendMessage({
-    required String receiver,
-    required String content,
-    required String rname,
-  }) async {
+  Future<void> sendMessage(
+      String receiver, String rname, String? content, String? imagefile) async {
     emit(SendMessageLoading());
 
     try {
       final messageData = await messageRepository.sendMessage(
-        sender: AuthRepository.getCurrentUser()!.uid,
-        receiver: receiver,
-        content: content,
-        sname: AuthRepository.getCurrentUser()!.displayName as String,
-        rname: rname,
+        AuthRepository.getCurrentUser()!.uid,
+        receiver,
+        content,
+        AuthRepository.getCurrentUser()!.displayName as String,
+        rname,
+        imagefile,
       );
-
+      print(messageData);
       final newMessage = Message(
         id: messageData['id'],
         sender: messageData['sender'],
-        receiver: messageData['receiver'],  
+        receiver: messageData['receiver'],
         content: messageData['content'],
         sname: messageData['sname'],
         rname: messageData['rname'],
+        filename: messageData['filename'],
         createdAt: messageData['createdAt'],
       );
       latestMessageCubit.updateMessages(newMessage);

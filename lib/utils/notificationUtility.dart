@@ -1,9 +1,13 @@
+import 'dart:isolate';
+import 'dart:ui';
+
 import 'package:chatterjii/app/firebase_options.dart';
 import 'package:chatterjii/features/notification/notificationCubit.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:async';
@@ -56,14 +60,25 @@ class NotificationUtility {
     await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform);
     if (remoteMessage.data.isNotEmpty) {
+      ReceivePort receiver = ReceivePort();
+      IsolateNameServer.registerPortWithName(receiver.sendPort, "port1");
+
+      receiver.listen((message) async {
+        if (message == "stop") {
+          await FlutterRingtonePlayer().stop();
+        }
+      });
+
       NotificationUtility()
           .createLocalNotification(dimissable: true, message: remoteMessage);
       //initialising hive this is way of initialising hive when in background Hive.initflutter method will not work.
-      var appDir = await getApplicationDocumentsDirectory();
-      Hive.init(appDir.path);
-      await Hive.openBox('counter');
+
+
+    
+    
       await NotificationCubit().notifiedUser();
-      Hive.box('counter').close();
+
+
     }
   }
 
@@ -71,8 +86,6 @@ class NotificationUtility {
   static Future<void> foregroundMessageListener(
     RemoteMessage remoteMessage,
   ) async {
-    await FirebaseMessaging.instance.getToken();
-
     NotificationUtility()
         .createLocalNotification(dimissable: true, message: remoteMessage);
     await NotificationCubit().notifiedUser();
@@ -88,26 +101,41 @@ class NotificationUtility {
     required bool dimissable,
     required RemoteMessage message,
   }) async {
-    final String title = message.data.values.first ?? "";
-    final String body = message.data.values.last ?? "";
-    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+    final String title = message.data['title'] ?? "";
+    final String body = message.data['body'] ?? "";
+    final int id = int.tryParse(message.data['id'] ?? "0") ?? 0;
+    print("body is : $body");
+    AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
       'high_importance_channel', // Ensure this matches your notification channel ID
       'High Importance Notifications',
       importance: Importance.max,
       priority: Priority.high,
       showWhen: false,
+      playSound: false,
     );
-    const NotificationDetails platformChannelSpecifics = NotificationDetails(
+
+    NotificationDetails platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
-        iOS: DarwinNotificationDetails(
+        iOS: const DarwinNotificationDetails(
             interruptionLevel: InterruptionLevel.active));
+    ReceivePort receiver = ReceivePort();
+    if (body == "play") {
+      print("message is play");
+      IsolateNameServer.registerPortWithName(receiver.sendPort, "port1");
+      print(" name  : $receiver");
+      FlutterRingtonePlayer()
+          .playRingtone(looping: true, volume: 10, asAlarm: false);
+    }
+
+    if (body == "stop") {
+      print("looked it up");
+      IsolateNameServer.lookupPortByName("port1")?.send("stop");
+      await FlutterRingtonePlayer().stop();
+    }
+    flutterLocalNotificationsPlugin.getActiveNotifications();
 
     flutterLocalNotificationsPlugin.show(
-      0,
-      title,
-      body,
-      platformChannelSpecifics,
-    );
+        id, title, body, platformChannelSpecifics);
   }
 }

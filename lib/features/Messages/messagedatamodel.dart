@@ -6,7 +6,8 @@ class Message {
   final String receiver;
   final String sname;
   final String rname;
-  final String content;
+  String? content;
+  String? filename;
   final Timestamp createdAt;
 
   Message({
@@ -15,8 +16,9 @@ class Message {
     required this.receiver,
     required this.sname,
     required this.rname,
-    required this.content,
+    this.content,
     required this.createdAt,
+    this.filename,
   });
 
   factory Message.fromFirestore(QueryDocumentSnapshot doc) {
@@ -24,10 +26,11 @@ class Message {
       id: doc.id,
       sender: doc['sender'],
       receiver: doc['receiver'],
-      content: doc['content'],
+      content: doc['content'] ?? "",
       sname: doc['sname'],
       rname: doc['rname'],
       createdAt: doc['createdAt'] as Timestamp,
+      filename: doc['filename'] ?? "",
     );
   }
 }
