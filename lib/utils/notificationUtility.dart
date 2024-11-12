@@ -8,8 +8,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:path_provider/path_provider.dart';
 import 'dart:async';
 
 class NotificationUtility {
@@ -119,21 +117,6 @@ class NotificationUtility {
         android: androidPlatformChannelSpecifics,
         iOS: const DarwinNotificationDetails(
             interruptionLevel: InterruptionLevel.active));
-    ReceivePort receiver = ReceivePort();
-    if (body == "play") {
-      print("message is play");
-      IsolateNameServer.registerPortWithName(receiver.sendPort, "port1");
-      print(" name  : $receiver");
-      FlutterRingtonePlayer()
-          .playRingtone(looping: true, volume: 10, asAlarm: false);
-    }
-
-    if (body == "stop") {
-      print("looked it up");
-      IsolateNameServer.lookupPortByName("port1")?.send("stop");
-      await FlutterRingtonePlayer().stop();
-    }
-    flutterLocalNotificationsPlugin.getActiveNotifications();
 
     flutterLocalNotificationsPlugin.show(
         id, title, body, platformChannelSpecifics);

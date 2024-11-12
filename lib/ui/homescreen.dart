@@ -1,4 +1,3 @@
-
 import 'package:chatterjii/features/auth/authcubit.dart';
 
 import 'package:chatterjii/app/routes.dart';
@@ -97,8 +96,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         _buildTabButton(context, 'Messages', 0),
-                        _buildTabButton(context, 'All Users', 1),
-                        _buildTabButton(context, 'images', 2)
+                        _buildTabButton(context, 'All Users', 1)
                       ],
                     ),
                   ),
@@ -123,10 +121,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                         topRight: Radius.circular(30))),
                 child: IndexedStack(
                   index: _selectedIndex,
-                  children: [
-                    MessagesList(),
-                    UsersScreen()
-                  ],
+                  children: [MessagesList(), UsersScreen()],
                 ),
               ),
             ),

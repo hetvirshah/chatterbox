@@ -16,9 +16,5 @@ void main() async {
   await Hive.openBox('counter');
   final fcmToken = await FirebaseMessaging.instance.getToken();
   print(fcmToken);
-  InitConfig initConfig = InitConfig(
-    domain: "zoom.us",
-    enableLog: true,
-  );
   runApp(const MyApp());
 }
